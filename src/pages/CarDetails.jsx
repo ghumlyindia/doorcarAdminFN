@@ -268,6 +268,38 @@ const CarDetails = () => {
                         </div>
                     </div>
 
+                    {/* Calculated Pricing Tiers (Admin View) */}
+                    <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <Activity className="text-yellow-500" size={20} />
+                            Projected Tier Pricing (24 Hrs)
+                        </h3>
+                        <div className="space-y-3">
+                            {[
+                                { km: 200, multiplier: 1, label: 'Standard' },
+                                { km: 400, multiplier: 1.5, label: 'Plus', recommended: true },
+                                { km: 1000, multiplier: 2.25, label: 'Unlimited' }
+                            ].map((tier, idx) => {
+                                const basePrice = Math.round(car.pricing.perDay * tier.multiplier);
+                                const tax = Math.round(basePrice * 0.05);
+                                const total = basePrice + tax;
+
+                                return (
+                                    <div key={idx} className={`p-3 rounded-xl border ${tier.recommended ? 'bg-yellow-50 border-yellow-200' : 'bg-gray-50 border-gray-100'}`}>
+                                        <div className="flex justify-between items-center mb-1">
+                                            <span className="font-bold text-gray-700">{tier.km} KM {tier.recommended && <span className="text-[10px] bg-yellow-400 text-gray-900 px-1.5 py-0.5 rounded ml-2">POPULAR</span>}</span>
+                                            <span className="font-bold text-lg text-gray-900">₹{total}</span>
+                                        </div>
+                                        <div className="flex justify-between text-xs text-gray-500">
+                                            <span>Base: ₹{basePrice} + Tax: ₹{tax}</span>
+                                            <span className="font-mono">x{tier.multiplier}</span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
                     {/* Specifications */}
                     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                         <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
@@ -436,7 +468,7 @@ const CarDetails = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
