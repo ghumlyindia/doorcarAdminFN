@@ -4,6 +4,61 @@ import { Upload, X, Check, ClipboardList, Car, MapPin, DollarSign, CheckCircle, 
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 
+
+const CarFormSkeleton = () => (
+    <div className="max-w-5xl mx-auto bg-white p-8 rounded-xl shadow-sm border border-gray-100 animate-pulse">
+        <div className="flex justify-between items-center mb-6">
+            <div>
+                <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-64 bg-gray-200 rounded"></div>
+            </div>
+        </div>
+
+        <div className="space-y-8">
+            {/* Basic Info Skeleton */}
+            <section>
+                <div className="h-8 w-40 bg-gray-200 rounded mb-4"></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i}>
+                            <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
+                            <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Category & Specs Skeleton */}
+            <section>
+                <div className="h-8 w-40 bg-gray-200 rounded mb-4"></div>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i}>
+                            <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
+                            <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Location Skeleton */}
+            <section>
+                <div className="h-8 w-32 bg-gray-200 rounded mb-4"></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+                    <div className="h-10 w-full bg-gray-200 rounded-lg"></div>
+                </div>
+            </section>
+
+            {/* Images Skeleton */}
+            <section>
+                <div className="h-8 w-32 bg-gray-200 rounded mb-4"></div>
+                <div className="h-40 w-full bg-gray-200 rounded-lg border-2 border-dashed border-gray-300"></div>
+            </section>
+        </div>
+    </div>
+);
+
 const EditCar = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -200,7 +255,7 @@ const EditCar = () => {
         }
     };
 
-    if (isFetching && !car) return <div className="text-center p-10">Loading car details...</div>;
+    if (isFetching && !car) return <CarFormSkeleton />;
     if (!car) return <div className="text-center p-10 text-red-500">Car not found!</div>;
 
     return (

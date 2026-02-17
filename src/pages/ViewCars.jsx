@@ -4,6 +4,64 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useState, useMemo, useEffect } from 'react';
 
+
+const ViewCarsSkeleton = () => (
+    <div className="space-y-6 animate-pulse">
+        {/* Stats Cards Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
+                            <div className="h-8 w-16 bg-gray-200 rounded"></div>
+                        </div>
+                        <div className="h-12 w-12 bg-gray-200 rounded-xl"></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        {/* Header Section Skeleton */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
+                <div>
+                    <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="h-10 w-64 bg-gray-200 rounded-lg"></div>
+                    <div className="h-10 w-24 bg-gray-200 rounded-lg"></div>
+                    <div className="h-10 w-32 bg-gray-200 rounded-xl"></div>
+                </div>
+            </div>
+        </div>
+
+        {/* Grid View Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {[...Array(8)].map((_, i) => (
+                <div key={i} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="h-48 bg-gray-200 w-full"></div>
+                    <div className="p-5">
+                        <div className="flex justify-between items-start mb-3">
+                            <div className="space-y-2">
+                                <div className="h-6 w-32 bg-gray-200 rounded"></div>
+                                <div className="h-4 w-20 bg-gray-200 rounded"></div>
+                            </div>
+                            <div className="h-3 w-3 bg-gray-200 rounded-full"></div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-gray-50">
+                            {[...Array(4)].map((_, j) => (
+                                <div key={j} className="h-3 w-16 bg-gray-200 rounded"></div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
 const ViewCars = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -171,12 +229,7 @@ const ViewCars = () => {
         });
     };
 
-    if (isLoading) return (
-        <div className="min-h-[400px] flex flex-col items-center justify-center text-gray-500">
-            <div className="w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p>Loading fleet...</p>
-        </div>
-    );
+    if (isLoading) return <ViewCarsSkeleton />;
 
     if (error) return (
         <div className="min-h-[400px] flex items-center justify-center">
@@ -265,8 +318,8 @@ const ViewCars = () => {
                         <button
                             onClick={() => setShowFilters(!showFilters)}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${showFilters
-                                    ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
-                                    : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
+                                ? 'bg-yellow-100 text-yellow-700 border border-yellow-300'
+                                : 'bg-gray-100 text-gray-700 border border-gray-200 hover:bg-gray-200'
                                 }`}
                         >
                             <SlidersHorizontal size={18} />
@@ -278,8 +331,8 @@ const ViewCars = () => {
                             <button
                                 onClick={() => setViewMode('grid')}
                                 className={`p-2 rounded transition-all ${viewMode === 'grid'
-                                        ? 'bg-white shadow-sm text-yellow-600'
-                                        : 'text-gray-500 hover:text-gray-700'
+                                    ? 'bg-white shadow-sm text-yellow-600'
+                                    : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
                                 <LayoutGrid size={18} />
@@ -287,8 +340,8 @@ const ViewCars = () => {
                             <button
                                 onClick={() => setViewMode('table')}
                                 className={`p-2 rounded transition-all ${viewMode === 'table'
-                                        ? 'bg-white shadow-sm text-yellow-600'
-                                        : 'text-gray-500 hover:text-gray-700'
+                                    ? 'bg-white shadow-sm text-yellow-600'
+                                    : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
                                 <List size={18} />
@@ -542,8 +595,8 @@ const ViewCars = () => {
                                         <td className="px-4 py-3 text-sm text-gray-600">{car.city}</td>
                                         <td className="px-4 py-3">
                                             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${car.availability?.isAvailable
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-red-100 text-red-700'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-red-100 text-red-700'
                                                 }`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full ${car.availability?.isAvailable ? 'bg-green-500' : 'bg-red-500'}`}></span>
                                                 {car.availability?.isAvailable ? 'Available' : 'Unavailable'}

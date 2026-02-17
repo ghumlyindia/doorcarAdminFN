@@ -20,6 +20,69 @@ const StatCard = ({ icon: Icon, label, value, color, iconColor }) => (
     </div>
 );
 
+
+const DashboardSkeleton = () => (
+    <div className="space-y-8 animate-pulse pb-10">
+        {/* Header Skeleton */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-64 bg-gray-200 rounded"></div>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-3">
+                <div className="h-10 w-32 bg-gray-200 rounded-lg"></div>
+                <div className="h-10 w-40 bg-gray-200 rounded-xl"></div>
+            </div>
+        </div>
+
+        {/* Stats Grid Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+                <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <div className="h-4 w-24 bg-gray-200 rounded mb-2"></div>
+                            <div className="h-8 w-16 bg-gray-200 rounded"></div>
+                        </div>
+                        <div className="h-12 w-12 bg-gray-200 rounded-xl"></div>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        {/* Charts & Activity Skeleton */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Chart Skeleton */}
+            <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-[400px]">
+                <div className="flex justify-between items-center mb-6">
+                    <div className="h-6 w-40 bg-gray-200 rounded"></div>
+                    <div className="h-6 w-24 bg-gray-200 rounded"></div>
+                </div>
+                <div className="bg-gray-100 rounded-xl h-full w-full"></div>
+            </div>
+
+            {/* Recent Activity Skeleton */}
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col h-[400px]">
+                <div className="flex items-center gap-2 mb-6">
+                    <div className="h-6 w-40 bg-gray-200 rounded"></div>
+                </div>
+                <div className="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar">
+                    {[...Array(5)].map((_, i) => (
+                        <div key={i} className="flex items-start gap-3 p-3">
+                            <div className="w-10 h-10 rounded-full bg-gray-200 shrink-0"></div>
+                            <div className="flex-1 min-w-0 space-y-2">
+                                <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                                <div className="h-3 w-20 bg-gray-200 rounded"></div>
+                            </div>
+                            <div className="w-2 h-2 rounded-full bg-gray-200 mt-2 shrink-0"></div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 const Dashboard = () => {
     const [dateRange, setDateRange] = useState({
         startDate: subDays(new Date(), 30).toISOString(), // Default Last 30 Days
@@ -70,11 +133,7 @@ const Dashboard = () => {
         });
     };
 
-    if (isLoading) return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-    );
+    if (isLoading) return <DashboardSkeleton />;
 
     if (isError) return (
         <div className="p-8 text-center text-red-600 bg-red-50 rounded-xl">

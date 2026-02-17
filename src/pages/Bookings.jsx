@@ -4,6 +4,33 @@ import { useGetAllBookingsQuery } from '../redux/apiSlice';
 import { Calendar, User, MapPin, CheckCircle, Clock, XCircle, DollarSign, Eye, Search } from 'lucide-react';
 import { format } from 'date-fns';
 
+
+const BookingsSkeleton = () => (
+    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+        <div className="p-6 border-b border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-32 bg-gray-200 rounded"></div>
+            </div>
+            <div className="h-10 w-full md:w-64 bg-gray-200 rounded-lg"></div>
+        </div>
+        <div className="p-4">
+            <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex gap-4 items-center">
+                        <div className="h-12 w-12 bg-gray-200 rounded-full"></div>
+                        <div className="flex-1 space-y-2">
+                            <div className="h-4 w-1/3 bg-gray-200 rounded"></div>
+                            <div className="h-4 w-1/4 bg-gray-200 rounded"></div>
+                        </div>
+                        <div className="h-8 w-24 bg-gray-200 rounded"></div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
 const Bookings = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
@@ -36,11 +63,7 @@ const Bookings = () => {
         );
     };
 
-    if (isLoading) return (
-        <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-    );
+    if (isLoading) return <BookingsSkeleton />;
 
     if (isError) return (
         <div className="p-4 bg-red-50 text-red-600 rounded-lg">

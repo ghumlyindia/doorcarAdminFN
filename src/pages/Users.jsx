@@ -4,6 +4,45 @@ import { Search, Mail, Phone, Calendar, ChevronRight, Check, X, Loader2 } from '
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
+
+const UsersSkeleton = () => (
+    <div className="space-y-6 animate-pulse">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <div>
+                <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-32 bg-gray-200 rounded"></div>
+            </div>
+            <div className="h-10 w-full md:w-64 bg-gray-200 rounded-lg"></div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="p-4 border-b border-gray-100 bg-gray-50 flex gap-4">
+                {[...Array(6)].map((_, i) => (
+                    <div key={i} className="h-4 flex-1 bg-gray-200 rounded"></div>
+                ))}
+            </div>
+            <div className="p-4 space-y-4">
+                {[...Array(5)].map((_, i) => (
+                    <div key={i} className="flex gap-4 items-center border-b border-gray-50 pb-4 last:border-0 last:pb-0">
+                        <div className="flex items-center gap-3 flex-1">
+                            <div className="w-8 h-8 rounded-full bg-gray-200"></div>
+                            <div className="space-y-1">
+                                <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                                <div className="h-3 w-16 bg-gray-200 rounded"></div>
+                            </div>
+                        </div>
+                        <div className="h-4 flex-1 bg-gray-200 rounded"></div>
+                        <div className="h-6 flex-1 bg-gray-200 rounded-full"></div>
+                        <div className="h-6 flex-1 bg-gray-200 rounded-full"></div>
+                        <div className="h-4 flex-1 bg-gray-200 rounded"></div>
+                        <div className="h-8 w-8 bg-gray-200 rounded-full ml-auto"></div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
 const Users = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
@@ -37,12 +76,7 @@ const Users = () => {
         return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
     };
 
-    if (isLoading) return (
-        <div className="min-h-[400px] flex flex-col items-center justify-center text-gray-500">
-            <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p>Loading users...</p>
-        </div>
-    );
+    if (isLoading) return <UsersSkeleton />;
 
     if (error) return (
         <div className="min-h-[400px] flex items-center justify-center">

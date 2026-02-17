@@ -8,6 +8,42 @@ import {
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 
+
+const BookingDetailsSkeleton = () => (
+    <div className="max-w-5xl mx-auto space-y-6 animate-pulse p-6">
+        <div className="flex justify-between items-center">
+            <div className="h-6 w-32 bg-gray-200 rounded"></div>
+            <div className="h-10 w-32 bg-gray-200 rounded-lg"></div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="p-6 border-b border-gray-100 flex justify-between items-start">
+                <div>
+                    <div className="h-8 w-48 bg-gray-200 rounded mb-2"></div>
+                    <div className="h-4 w-40 bg-gray-200 rounded"></div>
+                </div>
+                <div className="h-8 w-24 bg-gray-200 rounded-full"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-x divide-gray-100">
+                {[...Array(3)].map((_, i) => (
+                    <div key={i} className="p-6 space-y-6">
+                        <div className="h-5 w-32 bg-gray-200 rounded mb-4"></div>
+                        <div className="space-y-4">
+                            {[...Array(4)].map((_, j) => (
+                                <div key={j}>
+                                    <div className="h-3 w-20 bg-gray-200 rounded mb-2"></div>
+                                    <div className="h-5 w-full bg-gray-200 rounded"></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+);
+
 const BookingDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -17,11 +53,7 @@ const BookingDetails = () => {
     // Use for future implementation of status updates
     // const [updateStatus, { isLoading: isUpdating }] = useUpdateBookingStatusMutation();
 
-    if (isLoading) return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-        </div>
-    );
+    if (isLoading) return <BookingDetailsSkeleton />;
 
     if (error || !booking) return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-50 text-red-600">
