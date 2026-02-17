@@ -4,7 +4,7 @@ export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
         // baseUrl: 'http://localhost:5000/api',
-        baseUrl: 'https://doorcarbn.up.railway.app/api',
+        baseUrl: 'https://doorcarbn.onrender.com/api',
         prepareHeaders: (headers) => {
             const token = localStorage.getItem('token');
             if (token) {
